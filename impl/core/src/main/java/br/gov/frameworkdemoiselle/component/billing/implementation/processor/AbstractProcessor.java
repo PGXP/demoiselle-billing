@@ -34,44 +34,46 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.component.billing.processors.memory;
+package br.gov.frameworkdemoiselle.component.billing.implementation.processor;
 
+import br.gov.frameworkdemoiselle.component.billing.AuditProcessorException;
+import br.gov.frameworkdemoiselle.component.billing.Processor;
 import br.gov.frameworkdemoiselle.component.billing.domain.Trail;
-import br.gov.frameworkdemoiselle.component.billing.implementation.processor.AbstractProcessor;
-import br.gov.frameworkdemoiselle.component.billing.implementation.qualifier.BillingProcessor;
-import javax.enterprise.event.Observes;
-import javax.ws.rs.core.MediaType;
-
+import br.gov.frameworkdemoiselle.component.billing.implementation.qualifier.BillingProcessorFail;
 import br.gov.frameworkdemoiselle.util.Beans;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.enterprise.inject.spi.BeanManager;
+import javax.enterprise.util.AnnotationLiteral;
 
 /**
  *
  * @author SERPRO
  *
  */
-public class MEMORYProcessors extends AbstractProcessor {
+public abstract class AbstractProcessor implements Processor {
 
-    private final MEMORYConfig config = Beans.getReference(MEMORYConfig.class);
-    private ConcurrentLinkedQueue<Trail> lista = new ConcurrentLinkedQueue<Trail>();
+    private final BeanManager beanManager = Beans.getBeanManager();
 
     /**
      *
      * @param trail
      */
     @Override
-    public void execute(@Observes @BillingProcessor Trail trail) {
+    public void execute(Trail trail) {
+        trail.setProcessorName(this.getClass().getName());
+    }
 
-        super.execute(trail);
-
-        try {
-            lista.add(trail);
-
-        } catch (Exception e) {
-            fail("MEMORYProcessors :" + e.getMessage(), trail);
-        }
-
+    /**
+     *
+     * @param message
+     * @param trail
+     */
+    @SuppressWarnings("serial")
+    protected void fail(String message, Trail trail) {
+        beanManager.fireEvent(trail, new AnnotationLiteral<BillingProcessorFail>() {
+        });
+        Logger.getLogger(AbstractProcessor.class.getName()).log(Level.SEVERE, null, new AuditProcessorException(message, new Exception()));
     }
 
 }

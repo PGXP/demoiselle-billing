@@ -34,44 +34,46 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.component.billing.processors.memory;
+package br.gov.frameworkdemoiselle.component.billing.implementation.util;
 
-import br.gov.frameworkdemoiselle.component.billing.domain.Trail;
-import br.gov.frameworkdemoiselle.component.billing.implementation.processor.AbstractProcessor;
-import br.gov.frameworkdemoiselle.component.billing.implementation.qualifier.BillingProcessor;
-import javax.enterprise.event.Observes;
-import javax.ws.rs.core.MediaType;
-
-import br.gov.frameworkdemoiselle.util.Beans;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import com.google.gson.Gson;
+import java.io.File;
+import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  *
  * @author SERPRO
  *
  */
-public class MEMORYProcessors extends AbstractProcessor {
-
-    private final MEMORYConfig config = Beans.getReference(MEMORYConfig.class);
-    private ConcurrentLinkedQueue<Trail> lista = new ConcurrentLinkedQueue<Trail>();
+public final class Util {
 
     /**
      *
-     * @param trail
+     * @param string
+     * @return
      */
-    @Override
-    public void execute(@Observes @BillingProcessor Trail trail) {
-
-        super.execute(trail);
-
-        try {
-            lista.add(trail);
-
-        } catch (Exception e) {
-            fail("MEMORYProcessors :" + e.getMessage(), trail);
-        }
-
+    public static Map<String, String> jsonToMap(String string) {
+        Map<String, String> retorno = new Gson().fromJson((String) string, Map.class);
+        return retorno;
     }
+
+    /**
+     *
+     * @param object
+     * @return
+     */
+    public static String jsonSerializer(Object object) {
+        return new Gson().toJson(object);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static String getFolderPathDefault() {
+        return System.getProperty("user.dir") + File.separatorChar + "demoiselle-audit-log" + File.separatorChar;
+    }
+    private static final Logger LOG = Logger.getLogger(Util.class.getName());
 
 }

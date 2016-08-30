@@ -1,16 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package br.gov.frameworkdemoiselle.component.billing.internal;
+
+package br.gov.frameworkdemoiselle.component.billing.implementation;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.logging.Logger;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -20,7 +12,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -63,5 +54,6 @@ public class PerformanceListener implements Filter {
     public void destroy() {
 
     }
+    private static final Logger LOG = Logger.getLogger(PerformanceListener.class.getName());
 
 }

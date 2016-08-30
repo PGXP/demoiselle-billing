@@ -43,7 +43,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Demoiselle Audit</name>
+    <name>Demoiselle Billing</name>
     <description>
         A liberação de versões deste componente deve ser feita a partir deste build, que fará automaticamente o build
         de todos os artefatos com versionamento sincronizado. Jamais gere uma versão deste componente sem utilizar este build.
@@ -55,7 +55,6 @@
         <module>impl/processors/mongo</module>
         <module>impl/processors/memory</module>
         <module>impl/processors/sgdb</module>
-        
     </modules>
 
     <build>

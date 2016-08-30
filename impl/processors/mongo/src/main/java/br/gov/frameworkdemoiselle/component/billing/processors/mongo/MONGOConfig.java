@@ -1,48 +1,48 @@
-package br.gov.frameworkdemoiselle.component.audit.processors.rest;
+package br.gov.frameworkdemoiselle.component.billing.processors.mongo;
 
 import br.gov.frameworkdemoiselle.annotation.Name;
 import br.gov.frameworkdemoiselle.configuration.Configuration;
 
-@Configuration(prefix = "frameworkdemoiselle.audit.processor.mongo")
+@Configuration(prefix = "frameworkdemoiselle.billing.processor.mongo")
 public class MONGOConfig {
-	
+
     @Name("server.url")
     private String serverUrl;
 
     @Name("database.name")
     private String dataBaseName;
-    
+
     @Name("database.user")
     private String databaseUser;
-    
+
     @Name("database.password")
     private String databasePass;
-    
+
     @Name("collection.name")
     private String collectionName;
 
     public String getDataBaseName() {
-            return dataBaseName;
+        return dataBaseName;
     }
 
     public void setDataBaseName(String dataBaseName) {
-            this.dataBaseName = dataBaseName;
+        this.dataBaseName = dataBaseName;
     }
 
     public String getDatabaseUser() {
-            return databaseUser;
+        return databaseUser;
     }
 
     public void setDatabaseUser(String databaseUser) {
-            this.databaseUser = databaseUser;
+        this.databaseUser = databaseUser;
     }
 
     public String getDatabasePass() {
-            return databasePass;
+        return databasePass;
     }
 
     public void setDatabasePass(String databasePass) {
-            this.databasePass = databasePass;
+        this.databasePass = databasePass;
     }
 
     public String getCollectionName() {
@@ -54,11 +54,11 @@ public class MONGOConfig {
     }
 
     public String getServerUrl() {
-            return serverUrl;
+        return serverUrl;
     }
 
     public void setServerUrl(String serverUrl) {
-            this.serverUrl = serverUrl;
+        this.serverUrl = serverUrl;
     }
-	
+
 }

@@ -34,13 +34,13 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.component.audit.processors.rest;
+package br.gov.frameworkdemoiselle.component.billing.processors.mongo;
 
+import br.gov.frameworkdemoiselle.component.billing.domain.Trail;
+import br.gov.frameworkdemoiselle.component.billing.implementation.processor.AbstractProcessor;
 import javax.enterprise.event.Observes;
 
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-import br.gov.frameworkdemoiselle.component.audit.implementation.processor.AbstractProcessor;
-import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessor;
+import br.gov.frameworkdemoiselle.component.billing.implementation.qualifier.BillingProcessor;
 import br.gov.frameworkdemoiselle.util.Beans;
 
 import com.mongodb.BasicDBObject;
@@ -62,7 +62,7 @@ public class MONGOProcessors extends AbstractProcessor {
      * @param trail
      */
     @Override
-    public void execute(@Observes @AuditProcessor Trail trail) {
+    public void execute(@Observes @BillingProcessor Trail trail) {
 
         super.execute(trail);
 
@@ -71,16 +71,16 @@ public class MONGOProcessors extends AbstractProcessor {
             MongoClient mongo = new MongoClient(config.getServerUrl());
             DB db = mongo.getDB(config.getDataBaseName());
             Boolean authentication = Boolean.TRUE;
-            
-            if(!"".equals(config.getDatabaseUser())){
+
+            if (!"".equals(config.getDatabaseUser())) {
                 authentication = db.authenticate(config.getDatabaseUser(), config.getDatabasePass().toCharArray());
             }
-            
-            if(authentication){
+
+            if (authentication) {
                 DBCollection table = db.getCollection(config.getCollectionName());
 
                 BasicDBObject document = new BasicDBObject();
-                document.put("ClassName", trail.getClassName());            
+                document.put("ClassName", trail.getClassName());
                 document.put("IdName", trail.getIdName());
                 document.put("LayerName", trail.getLayerName());
                 document.put("ObjSerial", trail.getObjSerial());
@@ -92,14 +92,12 @@ public class MONGOProcessors extends AbstractProcessor {
                 document.put("When", trail.getWhen());
                 document.put("Where", trail.getWhere());
                 table.insert(document);
-            }
-            else{
+            } else {
                 fail("MONGOProcessors : Authentication failed!", trail);
                 throw new RuntimeException("Authentication failed!");
             }
 
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             fail("MONGOProcessors :" + e.getMessage(), trail);
         }
     }

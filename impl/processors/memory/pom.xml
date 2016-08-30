@@ -54,9 +54,9 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <name>Demoiselle Billing Processors - REST</name>
+    <name>Demoiselle Billing Processors - MEMORY</name>
 
-    <description>Demoiselle Billing Processors - REST</description>
+    <description>Demoiselle Billing Processors - MEMORY</description>
 
     <licenses>
         <license>

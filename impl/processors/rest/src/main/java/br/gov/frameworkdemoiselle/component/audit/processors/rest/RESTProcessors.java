@@ -34,42 +34,54 @@
  * ou escreva para a Fundação do Software Livre (FSF) Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02111-1301, USA.
  */
-package br.gov.frameworkdemoiselle.component.billing.processors.memory;
+package br.gov.frameworkdemoiselle.component.audit.processors.rest;
 
-import br.gov.frameworkdemoiselle.component.billing.domain.Trail;
-import br.gov.frameworkdemoiselle.component.billing.implementation.processor.AbstractProcessor;
-import br.gov.frameworkdemoiselle.component.billing.implementation.qualifier.BillingProcessor;
 import javax.enterprise.event.Observes;
 import javax.ws.rs.core.MediaType;
 
+import org.jboss.resteasy.client.ClientRequest;
+import org.jboss.resteasy.client.ClientResponse;
+
+import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
+import br.gov.frameworkdemoiselle.component.audit.implementation.processor.AbstractProcessor;
+import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessor;
+import br.gov.frameworkdemoiselle.component.audit.implementation.util.Util;
 import br.gov.frameworkdemoiselle.util.Beans;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  *
  * @author SERPRO
  *
  */
-public class MEMORYProcessors extends AbstractProcessor {
 
-    private final MEMORYConfig config = Beans.getReference(MEMORYConfig.class);
-    private ConcurrentLinkedQueue<Trail> lista = new ConcurrentLinkedQueue<Trail>();
+public class RESTProcessors extends AbstractProcessor {
+
+    private final RESTConfig config = Beans.getReference(RESTConfig.class);
+    private static final int HTTP_OK = 200;
 
     /**
      *
      * @param trail
      */
     @Override
-    public void execute(@Observes @BillingProcessor Trail trail) {
+    public void execute(@Observes @AuditProcessor Trail trail) {
 
         super.execute(trail);
 
         try {
-            lista.add(trail);
+            ClientRequest request = new ClientRequest(config.getServerUrl()+ "/rest/trail/create");
+            request.body(MediaType.APPLICATION_JSON, Util.jsonSerializer(trail));
+            ClientResponse response = null;
+
+            response = request.post();
+
+            int apiResponseCode = response.getResponseStatus().getStatusCode();
+            if (response.getResponseStatus().getStatusCode() != HTTP_OK) {
+                fail("Failed with HTTP error code : " + apiResponseCode, trail);
+            }
 
         } catch (Exception e) {
-            fail("MEMORYProcessors :" + e.getMessage(), trail);
+            fail("RESTProcessors :" + e.getMessage(), trail);
         }
 
     }
