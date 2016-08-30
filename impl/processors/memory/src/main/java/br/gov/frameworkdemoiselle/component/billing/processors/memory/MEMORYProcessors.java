@@ -36,17 +36,13 @@
  */
 package br.gov.frameworkdemoiselle.component.billing.processors.memory;
 
+import br.gov.frameworkdemoiselle.component.billing.domain.Trail;
 import javax.enterprise.event.Observes;
 import javax.ws.rs.core.MediaType;
 
-import org.jboss.resteasy.client.ClientRequest;
-import org.jboss.resteasy.client.ClientResponse;
-
-import br.gov.frameworkdemoiselle.component.audit.domain.Trail;
-import br.gov.frameworkdemoiselle.component.audit.implementation.processor.AbstractProcessor;
-import br.gov.frameworkdemoiselle.component.audit.implementation.qualifier.AuditProcessor;
-import br.gov.frameworkdemoiselle.component.audit.implementation.util.Util;
 import br.gov.frameworkdemoiselle.util.Beans;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  *
@@ -56,7 +52,7 @@ import br.gov.frameworkdemoiselle.util.Beans;
 public class MEMORYProcessors extends AbstractProcessor {
 
     private final MEMORYConfig config = Beans.getReference(MEMORYConfig.class);
-    private static final int HTTP_OK = 200;
+    private ConcurrentLinkedQueue<Trail> lista = new ConcurrentLinkedQueue<Trail>();
 
     /**
      *
@@ -68,19 +64,10 @@ public class MEMORYProcessors extends AbstractProcessor {
         super.execute(trail);
 
         try {
-            ClientRequest request = new ClientRequest(config.getServerUrl() + "/rest/trail/create");
-            request.body(MediaType.APPLICATION_JSON, Util.jsonSerializer(trail));
-            ClientResponse response = null;
-
-            response = request.post();
-
-            int apiResponseCode = response.getResponseStatus().getStatusCode();
-            if (response.getResponseStatus().getStatusCode() != HTTP_OK) {
-                fail("Failed with HTTP error code : " + apiResponseCode, trail);
-            }
+            lista.add(trail);
 
         } catch (Exception e) {
-            fail("RESTProcessors :" + e.getMessage(), trail);
+            fail("MEMORYProcessors :" + e.getMessage(), trail);
         }
 
     }
