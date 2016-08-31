@@ -36,7 +36,7 @@
  */
 package br.gov.frameworkdemoiselle.component.billing.implementation.processor;
 
-import br.gov.frameworkdemoiselle.component.billing.AuditProcessorException;
+import br.gov.frameworkdemoiselle.component.billing.BillingProcessorException;
 import br.gov.frameworkdemoiselle.component.billing.Processor;
 import br.gov.frameworkdemoiselle.component.billing.domain.Trail;
 import br.gov.frameworkdemoiselle.component.billing.implementation.qualifier.BillingProcessorFail;
@@ -73,7 +73,7 @@ public abstract class AbstractProcessor implements Processor {
     protected void fail(String message, Trail trail) {
         beanManager.fireEvent(trail, new AnnotationLiteral<BillingProcessorFail>() {
         });
-        Logger.getLogger(AbstractProcessor.class.getName()).log(Level.SEVERE, null, new AuditProcessorException(message, new Exception()));
+        Logger.getLogger(AbstractProcessor.class.getName()).log(Level.SEVERE, null, new BillingProcessorException(message, new Exception()));
     }
 
 }

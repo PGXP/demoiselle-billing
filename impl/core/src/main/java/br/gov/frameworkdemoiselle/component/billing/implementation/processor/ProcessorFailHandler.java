@@ -36,9 +36,9 @@
  */
 package br.gov.frameworkdemoiselle.component.billing.implementation.processor;
 
-import br.gov.frameworkdemoiselle.component.billing.AuditException;
+import br.gov.frameworkdemoiselle.component.billing.BillingException;
 import br.gov.frameworkdemoiselle.component.billing.domain.Trail;
-import br.gov.frameworkdemoiselle.component.billing.implementation.AuditConfig;
+import br.gov.frameworkdemoiselle.component.billing.implementation.BillingConfig;
 import br.gov.frameworkdemoiselle.component.billing.implementation.qualifier.BillingProcessorFail;
 import br.gov.frameworkdemoiselle.component.billing.implementation.util.Util;
 import br.gov.frameworkdemoiselle.util.Beans;
@@ -62,7 +62,7 @@ import javax.enterprise.event.Observes;
 @ApplicationScoped
 public class ProcessorFailHandler {
 
-    private final AuditConfig config = Beans.getReference(AuditConfig.class);
+    private final BillingConfig config = Beans.getReference(BillingConfig.class);
 
     /**
      *
@@ -98,17 +98,17 @@ public class ProcessorFailHandler {
                 Logger.getLogger(ProcessorFailHandler.class.getName()).log(Level.INFO, "Object Trail wrote into file ''{0}{1}''", new Object[]{folder, fileName});
 
             } else {
-                throw new AuditException("Fail writing Trail object into file '" + folder + fileName, new IOException());
+                throw new BillingException("Fail writing Trail object into file '" + folder + fileName, new IOException());
             }
         } catch (IOException e) {
-            throw new AuditException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage(), e);
+            throw new BillingException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage(), e);
         } finally {
             try {
                 if (output != null) {
                     output.close();
                 }
             } catch (IOException e) {
-                throw new AuditException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage(), e);
+                throw new BillingException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage(), e);
             }
 
             try {
@@ -116,7 +116,7 @@ public class ProcessorFailHandler {
                     os.close();
                 }
             } catch (IOException e) {
-                throw new AuditException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage(), e);
+                throw new BillingException("Fail writing Trail object into file '" + folder + fileName + "', message error :" + e.getMessage(), e);
             }
         }
     }

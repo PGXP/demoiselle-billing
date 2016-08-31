@@ -43,14 +43,14 @@ import java.util.logging.Logger;
  * @author SERPRO
  *
  */
-public class AuditException extends RuntimeException {
+public class BillingProcessorException extends BillingException {
 
     private static final long serialVersionUID = 1L;
 
     /**
      *
      */
-    public AuditException() {
+    public BillingProcessorException() {
         super();
     }
 
@@ -59,8 +59,8 @@ public class AuditException extends RuntimeException {
      * @param msg
      * @param e
      */
-    public AuditException(String msg, Exception e) {
+    public BillingProcessorException(String msg, Exception e) {
         super(msg, e);
     }
-    private static final Logger LOG = Logger.getLogger(AuditException.class.getName());
+    private static final Logger LOG = Logger.getLogger(BillingProcessorException.class.getName());
 }

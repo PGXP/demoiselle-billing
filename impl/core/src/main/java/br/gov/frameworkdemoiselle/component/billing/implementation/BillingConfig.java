@@ -46,7 +46,7 @@ import java.util.logging.Logger;
  *
  */
 @Configuration(prefix = "frameworkdemoiselle.billing")
-public class AuditConfig {
+public class BillingConfig {
 
     private static final Long TIME_DEFAULT = 3600000L;
 
@@ -130,6 +130,6 @@ public class AuditConfig {
     public String toString() {
         return "AuditConfig{" + "folderFailObjects=" + folderFailObjects + ", schedulerStartTime=" + schedulerStartTime + ", schedulerRepeatInterval=" + schedulerRepeatInterval + ", system=" + system + '}';
     }
-    private static final Logger LOG = Logger.getLogger(AuditConfig.class.getName());
+    private static final Logger LOG = Logger.getLogger(BillingConfig.class.getName());
 
 }

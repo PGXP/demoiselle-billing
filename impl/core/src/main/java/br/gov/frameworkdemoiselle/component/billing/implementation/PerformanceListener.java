@@ -1,8 +1,11 @@
-
 package br.gov.frameworkdemoiselle.component.billing.implementation;
 
+import br.gov.frameworkdemoiselle.component.billing.domain.Trail;
+import br.gov.frameworkdemoiselle.component.billing.implementation.processor.AbstractProcessor;
+import br.gov.frameworkdemoiselle.component.billing.implementation.qualifier.BillingProcessor;
 import java.io.IOException;
 import java.util.logging.Logger;
+import javax.enterprise.event.Observes;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
