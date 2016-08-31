@@ -36,53 +36,53 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
-        <groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
-	<artifactId>demoiselle-audit-auditors-persistence</artifactId>
-        <version>1.0.5-SNAPSHOT</version>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>br.gov.frameworkdemoiselle.component.billing</groupId>
+    <artifactId>demoiselle-billing-rest</artifactId>
+    <version>1.0.5-SNAPSHOT</version>
 
-	<properties>
-		<project.alias>audit-auditors-persistence</project.alias>
-		<maven.build.timestamp.format>dd/MM/yyyy HH:mm</maven.build.timestamp.format>
-		<buildNumber>${maven.build.timestamp}</buildNumber>
-	</properties>
+    <properties>
+        <project.alias>billing-rest</project.alias>
+        <maven.build.timestamp.format>dd/MM/yyyy HH:mm</maven.build.timestamp.format>
+        <buildNumber>${maven.build.timestamp}</buildNumber>
+    </properties>
 
-	<parent>
-		<groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
-		<artifactId>demoiselle-audit-parent</artifactId>
-		<relativePath>../../../parent/audit/</relativePath>
-		<version>1.0.5-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <groupId>br.gov.frameworkdemoiselle.component.billing</groupId>
+        <artifactId>demoiselle-billing-parent</artifactId>
+        <relativePath>../../../parent/billing/</relativePath>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
 
-	<name>Demoiselle Audit Auditors - Persistence</name>
+    <name>Demoiselle Billing - Rest</name>
 
-	<description>Demoiselle Audit Auditors - Persistence</description>
+    <description>Demoiselle Billing - Rest</description>
 
-	<licenses>
-		<license>
-			<name>GNU Lesser General Public License, Version 3</name>
-			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
-		</license>
-	</licenses>
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License, Version 3</name>
+            <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+        </license>
+    </licenses>
 
-	<organization>
-		<name>SERPRO - Serviço Federal de Processamento de Dados</name>
-		<url>http://www.serpro.gov.br</url>
-	</organization>
+    <organization>
+        <name>SERPRO - Serviço Federal de Processamento de Dados</name>
+        <url>http://www.serpro.gov.br</url>
+    </organization>
 
-	<dependencies>
-		<dependency>
-			<groupId>br.gov.frameworkdemoiselle.component.audit</groupId>
-			<artifactId>demoiselle-audit-core</artifactId>
-			<version>1.0.5-SNAPSHOT</version>
-		 <type>jar</type>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>br.gov.frameworkdemoiselle.component.billing</groupId>
+            <artifactId>demoiselle-billing-core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
         <dependency>
             <groupId>br.gov.frameworkdemoiselle</groupId>
-            <artifactId>demoiselle-jpa</artifactId>
+            <artifactId>demoiselle-rest</artifactId>
             <scope>compile</scope>
-            <version>2.4.0</version>
+            <version>2.5.1</version>
         </dependency>
 
-	</dependencies>
+    </dependencies>
 </project>
